@@ -10,4 +10,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Samples.Infrastructure\Samples.Infrastructure.Api\Samples.Infrastructure.Api.csproj" />
+    <ProjectReference Include="..\..\Samples.MT.Common\Samples.MT.Common.Api\Samples.MT.Common.Api.csproj" />
+    <ProjectReference Include="..\..\Samples.MT.Common\Samples.MT.Common.Data\Samples.MT.Common.Data.PlatformDb.EfCore\Samples.MT.Common.Data.PlatformDb.EfCore.csproj" />
+  </ItemGroup>
+
 </Project>
