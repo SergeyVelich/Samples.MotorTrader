@@ -1,4 +1,5 @@
 using Samples.Infrastructure.Api.ConfigValidation;
+using Samples.MT.Common.Api.Ardalis;
 using Samples.MT.Common.Data.PlatformDb.EfCore.Configuration;
 using Samples.MT.Common.Data.TenantDb.EfCore.Configuration;
 using static Samples.MT.Common.Api.Constants;
@@ -13,7 +14,8 @@ var tenantDbConfiguration = services.AddConfigWithValidation<TenantDbConfigurati
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(mvcOptions => mvcOptions
+        .ConfigureArdalis());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
