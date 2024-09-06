@@ -1,4 +1,5 @@
 using Ardalis.Result.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Samples.MT.Platform.Models.Requests;
 using Samples.MT.Platform.Models.Responses;
@@ -7,6 +8,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Samples.MT.Platform.Api.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/users")]
 public class UsersController : ControllerBase
