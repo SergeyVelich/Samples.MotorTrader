@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.7.3" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
   </ItemGroup>
 
@@ -16,6 +17,7 @@
     <ProjectReference Include="..\..\Samples.MT.Common\Samples.MT.Common.Api\Samples.MT.Common.Api.csproj" />
     <ProjectReference Include="..\..\Samples.MT.Common\Samples.MT.Common.Data\Samples.MT.Common.Data.PlatformDb.EfCore\Samples.MT.Common.Data.PlatformDb.EfCore.csproj" />
     <ProjectReference Include="..\..\Samples.MT.Common\Samples.MT.Common.Data\Samples.MT.Common.Data.TenantDb.EfCore\Samples.MT.Common.Data.TenantDb.EfCore.csproj" />
+    <ProjectReference Include="..\Samples.MT.Platform.Services\Samples.MT.Platform.Services.csproj" />
   </ItemGroup>
 
 </Project>
