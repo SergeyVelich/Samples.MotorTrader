@@ -1,5 +1,8 @@
 using Samples.Infrastructure.Api.ConfigValidation;
 using Samples.MT.Common.Api.Ardalis;
+using Samples.MT.Common.Api.Authentication;
+using Samples.MT.Common.Api.Authentication.Swagger;
+using Samples.MT.Common.Api.Configuration;
 using Samples.MT.Common.Data.PlatformDb.EfCore.Configuration;
 using Samples.MT.Common.Data.TenantDb.EfCore.Configuration;
 using Samples.MT.Platform.Api.Infrastructure;
@@ -11,6 +14,7 @@ var services = builder.Services;
 var configuration = builder.Configuration;
 
 // Add configurations to the container.
+var auth0IdentityConfiguration = services.AddConfigWithValidation<Auth0IdentityConfiguration>(configuration, ConfigurationSectionNames.Auth0Identity);
 var platformDbConfiguration = services.AddConfigWithValidation<PlatformDbConfiguration>(configuration, ConfigurationSectionNames.PlatformDb);
 var tenantDbConfiguration = services.AddConfigWithValidation<TenantDbConfiguration>(configuration, ConfigurationSectionNames.TenantDb);
 
@@ -18,9 +22,12 @@ var tenantDbConfiguration = services.AddConfigWithValidation<TenantDbConfigurati
 
 builder.Services.AddControllers(mvcOptions => mvcOptions
         .ConfigureArdalis());
+
+services.AddAuthentication(auth0IdentityConfiguration);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+services.AddSwagger(auth0IdentityConfiguration);
 
 services.AddAutoMapper(typeof(AppMappingProfile));
 
@@ -35,16 +42,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options => // UseSwaggerUI is called only in Development.
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-        options.RoutePrefix = string.Empty;
-    });
+    app.UseSwagger(auth0IdentityConfiguration);
 }
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

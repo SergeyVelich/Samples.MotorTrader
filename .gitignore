@@ -291,3 +291,4 @@ __pycache__/
 
 # appsettings overrides
 appsettings.overrides.json
+appsettings.Development.json
