@@ -1,5 +1,6 @@
 using Samples.Infrastructure.Api.ConfigValidation;
 using Samples.MT.Common.Data.PlatformDb.EfCore.Configuration;
+using Samples.MT.Common.Data.TenantDb.EfCore.Configuration;
 using static Samples.MT.Common.Api.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,7 @@ var configuration = builder.Configuration;
 
 // Add configurations to the container.
 var platformDbConfiguration = services.AddConfigWithValidation<PlatformDbConfiguration>(configuration, ConfigurationSectionNames.PlatformDb);
+var tenantDbConfiguration = services.AddConfigWithValidation<TenantDbConfiguration>(configuration, ConfigurationSectionNames.TenantDb);
 
 // Add services to the container.
 
@@ -18,6 +20,7 @@ builder.Services.AddSwaggerGen();
 
 //Add db contexts
 services.AddPlatformDbContext(platformDbConfiguration);
+services.AddTenantDbContext(tenantDbConfiguration);
 
 var app = builder.Build();
 
