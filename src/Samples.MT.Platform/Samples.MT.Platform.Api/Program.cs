@@ -2,6 +2,7 @@ using Samples.Infrastructure.Api.ConfigValidation;
 using Samples.MT.Common.Api.Ardalis;
 using Samples.MT.Common.Data.PlatformDb.EfCore.Configuration;
 using Samples.MT.Common.Data.TenantDb.EfCore.Configuration;
+using Samples.MT.Platform.Api.Mapping;
 using static Samples.MT.Common.Api.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,8 @@ builder.Services.AddControllers(mvcOptions => mvcOptions
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+services.AddAutoMapper(typeof(AppMappingProfile));
 
 //Add db contexts
 services.AddPlatformDbContext(platformDbConfiguration);
