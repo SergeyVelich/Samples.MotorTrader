@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+ 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Samples.Infrastructure\Samples.Infrastructure.Services\Samples.Infrastructure.Services.ArdalisResult\Samples.Infrastructure.Services.ArdalisResult.csproj" />
+    <ProjectReference Include="..\Samples.MT.Platform.Models\Samples.MT.Platform.Models.csproj" />
+  </ItemGroup>
+
+</Project>

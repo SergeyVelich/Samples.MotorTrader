@@ -2,6 +2,7 @@ using Samples.Infrastructure.Api.ConfigValidation;
 using Samples.MT.Common.Api.Ardalis;
 using Samples.MT.Common.Data.PlatformDb.EfCore.Configuration;
 using Samples.MT.Common.Data.TenantDb.EfCore.Configuration;
+using Samples.MT.Platform.Api.Infrastructure;
 using Samples.MT.Platform.Api.Mapping;
 using static Samples.MT.Common.Api.Constants;
 
@@ -26,6 +27,8 @@ services.AddAutoMapper(typeof(AppMappingProfile));
 //Add db contexts
 services.AddPlatformDbContext(platformDbConfiguration);
 services.AddTenantDbContext(tenantDbConfiguration);
+
+services.AddLogicServices();
 
 var app = builder.Build();
 
