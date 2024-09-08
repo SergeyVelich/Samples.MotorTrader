@@ -38,4 +38,26 @@ public class TenantDbContext : DbContext
         modelBuilder.HasDefaultSchema("TenantDb");
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
+
+    //TODO move to interceptors
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        AddTenantCascadeDelete();
+
+        return await base.SaveChangesAsync(cancellationToken);
+    }
+
+    public void AddTenantCascadeDelete()
+    {
+        var entries = ChangeTracker
+            .Entries<TenantEntity>()
+            .Where(e => e is { State: EntityState.Deleted }).ToList();
+
+        foreach (var entry in entries)
+        {
+            //TODO: refactor to use ExecuteDelete/ExecuteUpdate
+            Users.RemoveRange(Users.IgnoreQueryFilters().Where(x => x.TenantId == entry.Entity.Id && !x.IsDeleted));
+            Roles.RemoveRange(Roles.IgnoreQueryFilters().Where(x => x.TenantId == entry.Entity.Id && !x.IsDeleted));
+        }
+    }
 }
