@@ -34,6 +34,10 @@ public class TenantConfigEntityConfiguration : IEntityTypeConfiguration<TenantCo
             .IsRequired();
 
         builder
+            .Property(e => e.CreatedAt)
+            .HasDefaultValueSql("SYSDATETIMEOFFSET()");
+
+        builder
             .Property(e => e.Version)
             .IsRowVersion();
     }

@@ -28,6 +28,10 @@ public class RoleEntityConfiguration : IEntityTypeConfiguration<RoleEntity>
             .IsRequired();
 
         builder
+            .Property(e => e.CreatedAt)
+            .HasDefaultValueSql("SYSDATETIMEOFFSET()");
+
+        builder
             .Property(e => e.Version)
             .IsRowVersion();
     }
