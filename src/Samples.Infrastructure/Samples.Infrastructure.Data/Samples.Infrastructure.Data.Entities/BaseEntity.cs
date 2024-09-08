@@ -2,7 +2,7 @@
 
 namespace Samples.Infrastructure.Data.Entities;
 
-public class BaseEntity<T> : IEntityKey<T>, ISoftDelete, IOptimisticConcurrency
+public class BaseEntity<T> : AuditEntity, IEntityKey<T>, ISoftDelete, IOptimisticConcurrency
     where T : struct
 {
     public T Id { get; }

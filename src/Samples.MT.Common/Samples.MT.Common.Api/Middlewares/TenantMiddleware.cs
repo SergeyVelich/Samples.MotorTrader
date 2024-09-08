@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Samples.Infrastructure.Api.Middlewares;
+using Samples.Infrastructure.Common.Abstractions;
 using Samples.MT.Common.Services.Abstractions;
 using Samples.MT.Common.Services.Multitenancy.Abstractions;
 using System.Security.Claims;
@@ -16,7 +17,7 @@ public class TenantMiddleware
         _next = next;
     }
 
-    public async Task InvokeAsync(HttpContext httpContext, ITenantConfigurationProvider tenantConfigurationProvider, IRequestContext requestContext)
+    public async Task InvokeAsync(HttpContext httpContext, ITenantConfigurationProvider tenantConfigurationProvider, IRequestContext requestContext, IDbOperationContext dbOperationContext)
     {
         var user = httpContext.User;
         var organizationIdClaim = user.Claims.FirstOrDefault(c => c.Type == Claims.OrganizationIdClaimName);
@@ -34,6 +35,7 @@ public class TenantMiddleware
         }
 
         SetRequestContext(requestContext, httpContext, user, tenantId.Value);
+        SetDbOperationContext(dbOperationContext, user);//TODO Refactor to use requestContext?
 
         await _next.Invoke(httpContext);
     }
@@ -53,6 +55,11 @@ public class TenantMiddleware
         requestContext.TenantId = tenantId;
         requestContext.TargetTenantId = GetTenantIdFromQuery(httpContext) ?? tenantId;
         requestContext.TenantExternalId = user.Claims.FirstOrDefault(claim => claim.Type == Claims.OrganizationIdClaimName)?.Value;
+    }
+
+    private void SetDbOperationContext(IDbOperationContext dbOperationContext, ClaimsPrincipal user)
+    {
+        dbOperationContext.UserId = GetUserId(user);
     }
 
     private Guid? GetUserId(ClaimsPrincipal user)

@@ -50,6 +50,10 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>
             .HasMaxLength(128);
 
         builder
+            .Property(e => e.CreatedAt)
+            .HasDefaultValueSql("SYSDATETIMEOFFSET()");
+
+        builder
             .Property(e => e.Version)
             .IsRowVersion();
 

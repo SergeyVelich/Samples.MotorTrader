@@ -14,6 +14,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Samples.Infrastructure\Samples.Infrastructure.Common\Samples.Infrastructure.Common\Samples.Infrastructure.Common.csproj" />
     <ProjectReference Include="..\..\..\Samples.Infrastructure\Samples.Infrastructure.Data\Samples.Infrastructure.Data.EfCore\Samples.Infrastructure.Data.EfCore.csproj" />
     <ProjectReference Include="..\Samples.MT.Common.Data.TenantDb.Abstractions\Samples.MT.Common.Data.TenantDb.Abstractions.csproj" />
   </ItemGroup>
