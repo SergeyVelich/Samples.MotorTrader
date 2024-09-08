@@ -1,5 +1,7 @@
 using Samples.Infrastructure.Api;
 using Samples.Infrastructure.Api.ConfigValidation;
+using Samples.Infrastructure.Resources.Cache.LocalMemoryCache.Configuration;
+using Samples.Infrastructure.Resources.Cache.Redis.Configuration;
 using Samples.MT.Common.Api.Ardalis;
 using Samples.MT.Common.Api.Authentication;
 using Samples.MT.Common.Api.Authentication.Swagger;
@@ -22,6 +24,7 @@ var isLocalDeployment = EnvironmentHelpers.IsLocalDevelopment();
 var auth0IdentityConfiguration = services.AddConfigWithValidation<Auth0IdentityConfiguration>(configuration, ConfigurationSectionNames.Auth0Identity);
 var platformDbConfiguration = services.AddConfigWithValidation<PlatformDbConfiguration>(configuration, ConfigurationSectionNames.PlatformDb);
 var tenantDbConfiguration = services.AddConfigWithValidation<TenantDbConfiguration>(configuration, ConfigurationSectionNames.TenantDb);
+var redisCacheConfiguration = services.AddConfigWithValidation<RedisCacheConfiguration>(configuration, ConfigurationSectionNames.RedisCache);
 
 // Add services to the container.
 
@@ -45,6 +48,17 @@ services.AddTenantDbContext(provider =>
 
     return tenantDbConfiguration;
 });
+
+//Add resources
+
+if (isLocalDeployment)
+{
+    services.AddLocalMemoryCache();
+}
+else
+{
+    services.AddRedisCache(redisCacheConfiguration);
+}
 
 services.AddMultitenancyServices();
 services.AddLogicServices();
