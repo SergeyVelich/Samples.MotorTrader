@@ -7,10 +7,12 @@ namespace Samples.MT.Common.Data.TenantDb.EfCore.Configuration;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddTenantDbContext(this IServiceCollection services, TenantDbConfiguration configuration)
+    public static IServiceCollection AddTenantDbContext(this IServiceCollection services, Func<IServiceProvider, TenantDbConfiguration> configureOptions)
     {
         services.AddDbContext<TenantDbContext>((serviceProvider, optionsBuilder) =>
         {
+            var configuration = configureOptions(serviceProvider);
+
             optionsBuilder
                 .UseSqlServer(configuration.ConnectionString);
         });
