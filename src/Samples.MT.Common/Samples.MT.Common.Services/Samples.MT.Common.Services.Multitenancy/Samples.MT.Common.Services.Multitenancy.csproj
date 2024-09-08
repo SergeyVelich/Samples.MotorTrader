@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Samples.Infrastructure\Samples.Infrastructure.Common\Samples.Infrastructure.Common\Samples.Infrastructure.Common.csproj" />
+    <ProjectReference Include="..\..\Samples.MT.Common.Data\Samples.MT.Common.Data.PlatformDb.Abstractions\Samples.MT.Common.Data.PlatformDb.Abstractions.csproj" />
+    <ProjectReference Include="..\Samples.MT.Common.Services.Abstractions\Samples.MT.Common.Services.Abstractions.csproj" />
+    <ProjectReference Include="..\Samples.MT.Common.Services.Multitenancy.Abstractions\Samples.MT.Common.Services.Multitenancy.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

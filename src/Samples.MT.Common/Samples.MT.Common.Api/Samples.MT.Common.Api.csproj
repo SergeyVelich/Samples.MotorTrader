@@ -15,7 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Authentication.Swagger\" />
+    <ProjectReference Include="..\..\Samples.Infrastructure\Samples.Infrastructure.Api\Samples.Infrastructure.Api.csproj" />
+    <ProjectReference Include="..\Samples.MT.Common.Services\Samples.MT.Common.Services.Abstractions\Samples.MT.Common.Services.Abstractions.csproj" />
+    <ProjectReference Include="..\Samples.MT.Common.Services\Samples.MT.Common.Services.Multitenancy.Abstractions\Samples.MT.Common.Services.Multitenancy.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
