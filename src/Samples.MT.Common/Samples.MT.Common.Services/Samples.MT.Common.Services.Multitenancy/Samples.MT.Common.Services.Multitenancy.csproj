@@ -8,9 +8,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Samples.Infrastructure\Samples.Infrastructure.Common\Samples.Infrastructure.Common\Samples.Infrastructure.Common.csproj" />
+    <ProjectReference Include="..\..\..\Samples.Infrastructure\Samples.Infrastructure.Resources\Samples.Infrastructure.Resources.Cache.Abstractions\Samples.Infrastructure.Resources.Cache.Abstractions.csproj" />
     <ProjectReference Include="..\..\Samples.MT.Common.Data\Samples.MT.Common.Data.PlatformDb.Abstractions\Samples.MT.Common.Data.PlatformDb.Abstractions.csproj" />
-    <ProjectReference Include="..\Samples.MT.Common.Services.Abstractions\Samples.MT.Common.Services.Abstractions.csproj" />
     <ProjectReference Include="..\Samples.MT.Common.Services.Multitenancy.Abstractions\Samples.MT.Common.Services.Multitenancy.Abstractions.csproj" />
+    <ProjectReference Include="..\Samples.MT.Common.Services\Samples.MT.Common.Services.csproj" />
   </ItemGroup>
 
 </Project>
