@@ -30,10 +30,10 @@ public class TenantDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<TenantEntity>().HasQueryFilter(e => e.Id == _tenantDbConfiguration.TenantId);
-        modelBuilder.Entity<UserEntity>().HasQueryFilter(e => e.TenantId == _tenantDbConfiguration.TenantId);
-        modelBuilder.Entity<RoleEntity>().HasQueryFilter(e => e.TenantId == _tenantDbConfiguration.TenantId);
-        modelBuilder.Entity<UserRoleEntity>().HasQueryFilter(e => e.TenantId == _tenantDbConfiguration.TenantId);
+        modelBuilder.Entity<TenantEntity>().HasQueryFilter(e => e.Id == _tenantDbConfiguration.TenantId && !e.IsDeleted);
+        modelBuilder.Entity<UserEntity>().HasQueryFilter(e => e.TenantId == _tenantDbConfiguration.TenantId && !e.IsDeleted);
+        modelBuilder.Entity<RoleEntity>().HasQueryFilter(e => e.TenantId == _tenantDbConfiguration.TenantId && !e.IsDeleted);
+        modelBuilder.Entity<UserRoleEntity>().HasQueryFilter(e => e.TenantId == _tenantDbConfiguration.TenantId && !e.IsDeleted);
 
         modelBuilder.HasDefaultSchema("TenantDb");
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
