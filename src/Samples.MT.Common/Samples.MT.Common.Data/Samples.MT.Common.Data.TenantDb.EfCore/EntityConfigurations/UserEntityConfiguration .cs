@@ -50,6 +50,10 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>
             .HasMaxLength(128);
 
         builder
+            .Property(e => e.Version)
+            .IsRowVersion();
+
+        builder
             .HasMany(e => e.Roles)
             .WithMany()
             .UsingEntity<UserRoleEntity>(

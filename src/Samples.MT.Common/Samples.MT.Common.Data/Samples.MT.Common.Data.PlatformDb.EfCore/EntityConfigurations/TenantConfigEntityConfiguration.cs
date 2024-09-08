@@ -32,5 +32,9 @@ public class TenantConfigEntityConfiguration : IEntityTypeConfiguration<TenantCo
             .Property(e => e.TenantConfigStoreKey)
             .HasMaxLength(128)
             .IsRequired();
+
+        builder
+            .Property(e => e.Version)
+            .IsRowVersion();
     }
 }
