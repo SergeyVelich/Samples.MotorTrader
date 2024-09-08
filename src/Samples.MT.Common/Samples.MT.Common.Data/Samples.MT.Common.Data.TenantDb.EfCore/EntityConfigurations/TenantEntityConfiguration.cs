@@ -47,6 +47,10 @@ public class TenantEntityConfiguration : IEntityTypeConfiguration<TenantEntity>
             .HasMaxLength(128);
 
         builder
+            .Property(e => e.Version)
+            .IsRowVersion();
+
+        builder
             .HasMany(e => e.Users)
             .WithOne(e => e.Tenant)
             .HasForeignKey(e => e.TenantId)

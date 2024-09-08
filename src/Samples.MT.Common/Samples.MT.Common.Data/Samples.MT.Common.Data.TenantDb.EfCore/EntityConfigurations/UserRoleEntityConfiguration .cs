@@ -17,6 +17,10 @@ public class UserRoleEntityConfiguration : IEntityTypeConfiguration<UserRoleEnti
             .ValueGeneratedOnAdd();
 
         builder
+            .Property(e => e.Version)
+            .IsRowVersion();
+
+        builder
             .HasOne(e => e.Tenant)
             .WithMany()
             .HasForeignKey(e => e.TenantId)

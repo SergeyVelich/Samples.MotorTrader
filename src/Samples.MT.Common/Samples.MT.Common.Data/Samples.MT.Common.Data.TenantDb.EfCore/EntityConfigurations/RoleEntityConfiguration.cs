@@ -26,5 +26,9 @@ public class RoleEntityConfiguration : IEntityTypeConfiguration<RoleEntity>
             .Property(e => e.Name)
             .HasMaxLength(64)
             .IsRequired();
+
+        builder
+            .Property(e => e.Version)
+            .IsRowVersion();
     }
 }
