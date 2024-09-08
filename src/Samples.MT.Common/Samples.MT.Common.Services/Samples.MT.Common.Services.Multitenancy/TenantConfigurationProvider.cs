@@ -1,18 +1,22 @@
 ﻿using AutoMapper;
+using Samples.Infrastructure.Resources.Cache.Abstractions;
 using Samples.MT.Common.Data.PlatformDb.Abstractions;
 using Samples.MT.Common.Models;
 using Samples.MT.Common.Services.Multitenancy.Abstractions;
+using static Samples.MT.Common.Services.Constants;
 
 namespace Samples.MT.Common.Services.Multitenancy;
 
 public class TenantConfigurationProvider : ITenantConfigurationProvider
 {
+    private readonly ICacheService _cache;
     private readonly IPlatformDbUnitOfWork _platformDbUnitOfWork;
     private readonly ITenantConnectionStringProvider _tenantConnectionStringProvider;
     private readonly IMapper _mapper;
 
-    public TenantConfigurationProvider(IPlatformDbUnitOfWork platformDbUnitOfWork, ITenantConnectionStringProvider tenantConnectionStringProvider, IMapper mapper)
+    public TenantConfigurationProvider(ICacheService cache, IPlatformDbUnitOfWork platformDbUnitOfWork, ITenantConnectionStringProvider tenantConnectionStringProvider, IMapper mapper)
     {
+        _cache = cache;
         _platformDbUnitOfWork = platformDbUnitOfWork;
         _tenantConnectionStringProvider = tenantConnectionStringProvider;
         _mapper = mapper;
@@ -21,9 +25,16 @@ public class TenantConfigurationProvider : ITenantConfigurationProvider
     /// <inheritdoc/>
     public async Task<IEnumerable<TenantConfiguration>> GetTenantConfigurationsAsync(CancellationToken cancellationToken)
     {
+        var tenantConfigurations = await _cache.GetAsync<List<TenantConfiguration>>(Cache.TenantConfigurationsKey, cancellationToken);
+        if (tenantConfigurations is not null && tenantConfigurations.Count != 0)//TODO
+        {
+            return tenantConfigurations;
+        }
+
         var tenantConfigurationEntities = await _platformDbUnitOfWork.TenantConfigsRepository.GetAllByAsync(e => true, cancellationToken);
-        var tenantConfigurations = _mapper.Map<List<TenantConfiguration>>(tenantConfigurationEntities);
+        tenantConfigurations = _mapper.Map<List<TenantConfiguration>>(tenantConfigurationEntities);
         SetResourceConnections(tenantConfigurations);
+        await _cache.SetAsync(Cache.TenantConfigurationsKey, tenantConfigurations, cancellationToken);
 
         return tenantConfigurations;
     }

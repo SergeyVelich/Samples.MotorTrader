@@ -7,6 +7,7 @@ public static class Constants
         public const string Auth0Identity = "Auth0Identity";
         public const string PlatformDb = "Db:PlatformDb";
         public const string TenantDb = "Db:TenantDb";
+        public const string RedisCache = "RedisCache";
     }
 
     public static class Claims
