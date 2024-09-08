@@ -18,6 +18,8 @@ public class PlatformDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<TenantConfigEntity>().HasQueryFilter(e => !e.IsDeleted);
+
         modelBuilder.HasDefaultSchema("PlatformDb");
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
