@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Samples.Infrastructure.Api;
 using Samples.Infrastructure.Api.ConfigValidation;
 using Samples.Infrastructure.Resources.Cache.LocalMemoryCache.Configuration;
@@ -7,7 +8,9 @@ using Samples.MT.Common.Api.Ardalis;
 using Samples.MT.Common.Api.Authentication;
 using Samples.MT.Common.Api.Authentication.Swagger;
 using Samples.MT.Common.Api.Configuration;
+using Samples.MT.Common.Api.DbMigrator;
 using Samples.MT.Common.Api.Middlewares;
+using Samples.MT.Common.Data.PlatformDb.EfCore;
 using Samples.MT.Common.Data.PlatformDb.EfCore.Configuration;
 using Samples.MT.Common.Data.TenantDb.EfCore.Configuration;
 using Samples.MT.Common.Services.Multitenancy.Abstractions;
@@ -87,4 +90,16 @@ app.MapControllers();
 
 app.UseMiddleware<TenantMiddleware>();
 
+await RunDatabaseMigrations();
+
 app.Run();
+
+async Task RunDatabaseMigrations()
+{
+    using var scope = services.BuildServiceProvider().CreateScope();
+    var platformDbContext = scope.ServiceProvider.GetRequiredService<PlatformDbContext>();
+    await platformDbContext.Database.MigrateAsync(CancellationToken.None);//TODO: Move to separate class?
+
+    var tenantDatabaseMigrator = scope.ServiceProvider.GetRequiredService<ITenantDatabaseMigrator>();
+    await tenantDatabaseMigrator.MigrateTenantsDatabasesAsync(default);//TODO: Move to separate class?
+}
