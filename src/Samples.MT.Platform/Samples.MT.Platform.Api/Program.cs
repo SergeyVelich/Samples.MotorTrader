@@ -1,3 +1,4 @@
+using Samples.Infrastructure.Api;
 using Samples.Infrastructure.Api.ConfigValidation;
 using Samples.MT.Common.Api.Ardalis;
 using Samples.MT.Common.Api.Authentication;
@@ -14,6 +15,8 @@ using static Samples.MT.Common.Api.Constants;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
+
+var isLocalDeployment = EnvironmentHelpers.IsLocalDevelopment();
 
 // Add configurations to the container.
 var auth0IdentityConfiguration = services.AddConfigWithValidation<Auth0IdentityConfiguration>(configuration, ConfigurationSectionNames.Auth0Identity);
