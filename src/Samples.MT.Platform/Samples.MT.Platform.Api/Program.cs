@@ -2,6 +2,7 @@ using Samples.Infrastructure.Api;
 using Samples.Infrastructure.Api.ConfigValidation;
 using Samples.Infrastructure.Resources.Cache.LocalMemoryCache.Configuration;
 using Samples.Infrastructure.Resources.Cache.Redis.Configuration;
+using Samples.Infrastructure.Resources.Secrets.KeyVault;
 using Samples.MT.Common.Api.Ardalis;
 using Samples.MT.Common.Api.Authentication;
 using Samples.MT.Common.Api.Authentication.Swagger;
@@ -19,6 +20,12 @@ var services = builder.Services;
 var configuration = builder.Configuration;
 
 var isLocalDeployment = EnvironmentHelpers.IsLocalDevelopment();
+
+//Configure configuration sources
+if (!isLocalDeployment)
+{
+    configuration.AddAzureKeyVaultConfiguration(ConfigurationSectionNames.KeyVault);
+}
 
 // Add configurations to the container.
 var auth0IdentityConfiguration = services.AddConfigWithValidation<Auth0IdentityConfiguration>(configuration, ConfigurationSectionNames.Auth0Identity);
